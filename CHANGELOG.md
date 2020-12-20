@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - First schema version
 - contains domain, options, and question catalog as root element
+- Distribute JSON schema and validation function compiled with AJV
 
 ## [0.0.1] - 2020-12-15
 

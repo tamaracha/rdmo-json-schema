@@ -3,21 +3,21 @@ type: object
 required: [prefix, key, title]
 additionalProperties: false
 properties:
-  prefix: { $ref: '#/$defs/prefix' }
-  key: { $ref: '#/$defs/key' }
+  prefix: { $ref: "#/$defs/prefix" }
+  key: { $ref: "#/$defs/key" }
   title: { $ref: "#/$defs/text" }
   domain:
     oneOf:
-      - { $ref: '#/$defs/domainList' }
-      - { $ref: '#/$defs/domainMap' }
+      - { $ref: "#/$defs/domainList" }
+      - { $ref: "#/$defs/domainMap" }
   optionsets:
     title: Global optionsets
     description: |
       Here, it is possible to store reusable option sets that are not tied to one question. Because the order of optionsets doesn't carry any presentational meaning, the optionsets are given as object properties where the property key denotes the optionset key, and the values must be an array of options.
     type: object
-    propertyNames: { $ref: '#/$defs/key' }
+    propertyNames: { $ref: "#/$defs/key" }
     patternProperties:
-      '': { $ref: '#/$defs/options' }
+      "": { $ref: "#/$defs/options" }
   sections:
     title: Catalog sections
     description: A catalog's questions are grouped into these sections.'
@@ -27,7 +27,7 @@ properties:
       type: object
       required: [key, title]
       properties:
-        key: { $ref: '#/$defs/key' }
+        key: { $ref: "#/$defs/key" }
         title: { $ref: "#/$defs/text" }
         questions:
           type: array
@@ -39,12 +39,12 @@ properties:
                 required: [key, title]
                 additionalProperties: false
                 properties:
-                  key: { $ref: '#/$defs/key' }
-                  title: { $ref: '#/$defs/text' }
+                  key: { $ref: "#/$defs/key" }
+                  title: { $ref: "#/$defs/text" }
                   questions:
                     type: array
-                    items: { $ref: '#/$defs/question' }
-              - { $ref: '#/$defs/question' }
+                    items: { $ref: "#/$defs/question" }
+              - { $ref: "#/$defs/question" }
 $defs:
   prefix:
     title: URL prefix
@@ -54,7 +54,7 @@ $defs:
     title: Element key
     description: The key is kind of a human-readable id of an element in it's collection'. It should only contain non-capital letters and underscores, but should not start or end with underscore.
     type: string
-    pattern: '^[a-z]+([_][a-z]+)*$'
+    pattern: "^[a-z]+([_][a-z]+)*$"
   condition:
     title: Condition
     type: string
@@ -62,25 +62,25 @@ $defs:
     title: Readable text
     description: Text that is displayed to RDMO users
     oneOf:
-    - title: Simple text
-      description: Text which applies to each language
-      type: string
-    - title: Translated text
-      description: A map where each entry key must be an ISO language code, and the value is the respective  translation.
-      type: object
-      required: [de, en]
-      additionalProperties: false
-      patternProperties:
-        '^[a-z]{2}([-][A-Z]{2})?$':
-          type: string
+      - title: Simple text
+        description: Text which applies to each language
+        type: string
+      - title: Translated text
+        description: A map where each entry key must be an ISO language code, and the value is the respective  translation.
+        type: object
+        required: [de, en]
+        additionalProperties: false
+        patternProperties:
+          "^[a-z]{2}([-][A-Z]{2})?$":
+            type: string
   domainMap:
     title: Domain attribute map
     description: |
       Each property in the domain object describes an attribute, where the property key denotes the attribute key, whereas the property value is a domain object itself and contains child attributes. If therer are no attributes, the domain objects becomes an empty object.
     type: object
-    propertyNames: { $ref: '#/$defs/key' }
+    propertyNames: { $ref: "#/$defs/key" }
     patternProperties:
-      '': { $ref: '#/$defs/domainMap' }
+      "": { $ref: "#/$defs/domainMap" }
   domainList:
     title: domain attribute list
     description: |
@@ -91,8 +91,8 @@ $defs:
       type: object
       required: [key]
       properties:
-        key: { $ref: '#/$defs/key' }
-        children: { $ref: '#/$defs/domainList' }
+        key: { $ref: "#/$defs/key" }
+        children: { $ref: "#/$defs/domainList" }
   options:
     type: array
     items:
@@ -111,8 +111,8 @@ $defs:
         required: [key, text, type]
         additionalProperties: false
         properties:
-          key: { $ref: '#/$defs/key' }
-          condition: { $ref: '#/$defs/condition' }
+          key: { $ref: "#/$defs/key" }
+          condition: { $ref: "#/$defs/condition" }
           text: { $ref: "#/$defs/text" }
           type:
             type: string
@@ -121,8 +121,8 @@ $defs:
         required: [key, text, type, options]
         additionalProperties: false
         properties:
-          key: { $ref: '#/$defs/key' }
-          condition: { $ref: '#/$defs/condition' }
+          key: { $ref: "#/$defs/key" }
+          condition: { $ref: "#/$defs/condition" }
           text: { $ref: "#/$defs/text" }
           type:
             type: string
@@ -131,4 +131,4 @@ $defs:
             oneOf:
               - title: Global option key
                 type: string
-              - { $ref: '#/$defs/options' }
+              - { $ref: "#/$defs/options" }
