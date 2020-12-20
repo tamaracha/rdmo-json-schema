@@ -10,6 +10,7 @@
     "convert": "js-yaml schema/catalog.yml > dist/catalog.schema.json",
     "precompile": "shx mkdir -p dist",
     "compile": "ajv compile --spec draft2019 -s schema/catalog.yml -c ajv-formats --validate-formats --all-errors -o dist/validate-catalog.js",
+    "validate": "ajv compile --spec draft2019 -c ajv-formats -s",
     "prebuild": "npm run clean",
     "build": "npm run convert && npm run compile",
     "pretest": "npm run build",
@@ -61,6 +62,6 @@
   "lint-staged": {
     "*.js": "npm run lint --",
     "*.{yml,yaml,json}": "prettier --write",
-    "schemas/**/*.yml": "ajv compile --spec draft2019 -c ajv-formats -s"
+    "schemas/**/*.yml": "npm run validate --"
   }
 }
