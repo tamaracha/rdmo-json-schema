@@ -1,0 +1,134 @@
+title: Catalog
+type: object
+required: [prefix, key, title]
+additionalProperties: false
+properties:
+  prefix: { $ref: '#/$defs/prefix' }
+  key: { $ref: '#/$defs/key' }
+  title: { $ref: "#/$defs/text" }
+  domain:
+    oneOf:
+      - { $ref: '#/$defs/domainList' }
+      - { $ref: '#/$defs/domainMap' }
+  optionsets:
+    title: Global optionsets
+    description: |
+      Here, it is possible to store reusable option sets that are not tied to one question. Because the order of optionsets doesn't carry any presentational meaning, the optionsets are given as object properties where the property key denotes the optionset key, and the values must be an array of options.
+    type: object
+    propertyNames: { $ref: '#/$defs/key' }
+    patternProperties:
+      '': { $ref: '#/$defs/options' }
+  sections:
+    title: Catalog sections
+    description: A catalog's questions are grouped into these sections.'
+    type: array
+    items:
+      title: A catalog section
+      type: object
+      required: [key, title]
+      properties:
+        key: { $ref: '#/$defs/key' }
+        title: { $ref: "#/$defs/text" }
+        questions:
+          type: array
+          items:
+            oneOf:
+              - title: Question set
+                description: A set of questions that are displayed together on one page.
+                type: object
+                required: [key, title]
+                additionalProperties: false
+                properties:
+                  key: { $ref: '#/$defs/key' }
+                  title: { $ref: '#/$defs/text' }
+                  questions:
+                    type: array
+                    items: { $ref: '#/$defs/question' }
+              - { $ref: '#/$defs/question' }
+$defs:
+  prefix:
+    title: URL prefix
+    type: string
+    format: uri
+  key:
+    title: Element key
+    description: The key is kind of a human-readable id of an element in it's collection'. It should only contain non-capital letters and underscores, but should not start or end with underscore.
+    type: string
+    pattern: '^[a-z]+([_][a-z]+)*$'
+  condition:
+    title: Condition
+    type: string
+  text:
+    title: Readable text
+    description: Text that is displayed to RDMO users
+    oneOf:
+    - title: Simple text
+      description: Text which applies to each language
+      type: string
+    - title: Translated text
+      description: A map where each entry key must be an ISO language code, and the value is the respective  translation.
+      type: object
+      required: [de, en]
+      additionalProperties: false
+      patternProperties:
+        '^[a-z]{2}([-][A-Z]{2})?$':
+          type: string
+  domainMap:
+    title: Domain attribute map
+    description: |
+      Each property in the domain object describes an attribute, where the property key denotes the attribute key, whereas the property value is a domain object itself and contains child attributes. If therer are no attributes, the domain objects becomes an empty object.
+    type: object
+    propertyNames: { $ref: '#/$defs/key' }
+    patternProperties:
+      '': { $ref: '#/$defs/domainMap' }
+  domainList:
+    title: domain attribute list
+    description: |
+      The domain is described as recursive tree structure.
+      Each list entry can have a children property which holds a list of domain attributes again.
+    type: array
+    items:
+      type: object
+      required: [key]
+      properties:
+        key: { $ref: '#/$defs/key' }
+        children: { $ref: '#/$defs/domainList' }
+  options:
+    type: array
+    items:
+      type: object
+      required: [text]
+      additionalProperties: false
+      properties:
+        key: { $ref: "#/$defs/key" }
+        text: { $ref: "#/$defs/text" }
+        additionalInput:
+          type: boolean
+          default: false
+  question:
+    oneOf:
+      - type: object
+        required: [key, text, type]
+        additionalProperties: false
+        properties:
+          key: { $ref: '#/$defs/key' }
+          condition: { $ref: '#/$defs/condition' }
+          text: { $ref: "#/$defs/text" }
+          type:
+            type: string
+            enum: [boolean, open]
+      - type: object
+        required: [key, text, type, options]
+        additionalProperties: false
+        properties:
+          key: { $ref: '#/$defs/key' }
+          condition: { $ref: '#/$defs/condition' }
+          text: { $ref: "#/$defs/text" }
+          type:
+            type: string
+            enum: [single, multiple]
+          options:
+            oneOf:
+              - title: Global option key
+                type: string
+              - { $ref: '#/$defs/options' }
