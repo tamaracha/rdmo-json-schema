@@ -50,8 +50,7 @@
     "prettier": "^2.2.1",
     "shx": "^0.3.3",
     "snazzy": "^9.0.0",
-    "standard": "^16.0.3",
-    "tap-nyc": "^1.0.3"
+    "standard": "^16.0.3"
   },
   "husky": {
     "hooks": {
