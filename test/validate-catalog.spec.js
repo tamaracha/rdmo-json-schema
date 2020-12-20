@@ -26,3 +26,20 @@ test('invalid minimal catalog with non-uri prefix', t => {
   data.prefix = 'x.y.z'
   t.false(validate(data))
 })
+
+test('Translated text only validates if both translations are present', t => {
+  const data = catalog()
+  data.title = {
+    en: 'English title'
+  }
+  t.false(validate(data))
+  data.title = {
+    de: 'Deutscher Titel'
+  }
+  t.false(validate(data))
+  data.title = {
+    de: 'Deutscher Titel',
+    en: 'English title'
+  }
+  t.true(validate(data))
+})
