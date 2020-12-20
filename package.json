@@ -4,13 +4,20 @@
   "description": "A JSON schema for maintaining RDMO contents",
   "main": "index.js",
   "scripts": {
+    "lint": "standard --fix -- | snazzy",
     "clean": "shx rm -rf dist",
     "preconvert": "shx mkdir -p dist",
     "convert": "js-yaml schema/catalog.yml > dist/catalog.schema.json",
     "precompile": "shx mkdir -p dist",
     "compile": "ajv compile --spec draft2019 -s schema/catalog.yml -c ajv-formats --validate-formats --all-errors -o dist/validate-catalog.js",
-    "build": "npm run clean && npm run compile",
-    "test": "ava"
+    "prebuild": "npm run clean",
+    "build": "npm run convert && npm run compile",
+    "pretest": "npm run build",
+    "test": "ava --tap|tap-nyc",
+    "prepack": "npm run build",
+    "preversion": "npm test",
+    "version": "mate -w CHANGELOG.md && git add changelog.md",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
@@ -40,6 +47,7 @@
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "shx": "^0.3.3",
+    "snazzy": "^9.0.0",
     "standard": "^16.0.3"
   },
   "husky": {
@@ -49,7 +57,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "standard --fix",
+    "*.js": "npm run lint --",
     "*.{yml,yaml,json}": "prettier --write",
     "schemas/**/*.yml": "ajv compile --spec draft2019 -c ajv-formats -s"
   }
