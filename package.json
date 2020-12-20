@@ -17,7 +17,7 @@
     "test": "ava",
     "prepack": "npm run build",
     "preversion": "npm test",
-    "version": "mate -w CHANGELOG.md && git add changelog.md",
+    "version": "mate -w CHANGELOG.md && git add CHANGELOG.md",
     "postversion": "git push && git push --tags"
   },
   "repository": {
