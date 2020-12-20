@@ -66,13 +66,13 @@ $defs:
         description: Text which applies to each language
         type: string
       - title: Translated text
-        description: A map where each entry key must be an ISO language code, and the value is the respective  translation.
+        description: A map with german and english translation.
         type: object
         required: [de, en]
         additionalProperties: false
-        patternProperties:
-          "^[a-z]{2}([-][A-Z]{2})?$":
-            type: string
+        properties:
+          "de": { type: string }
+          "en": { type: string }
   domainMap:
     title: Domain attribute map
     description: |
