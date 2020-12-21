@@ -15,7 +15,7 @@
     "build": "npm run convert && npm run compile",
     "pretest": "npm run build",
     "test": "ava",
-    "prepack": "npm run build",
+    "prepare": "npm run build",
     "preversion": "npm test",
     "version": "mate -w CHANGELOG.md && git add CHANGELOG.md",
     "postversion": "git push && git push --tags"
