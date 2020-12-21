@@ -5,6 +5,7 @@ additionalProperties: false
 properties:
   prefix: { $ref: "#/$defs/prefix" }
   key: { $ref: "#/$defs/key" }
+  comment: { type: string }
   title: { $ref: "#/$defs/text" }
   domain:
     oneOf:
@@ -23,28 +24,29 @@ properties:
     description: A catalog's questions are grouped into these sections.'
     type: array
     items:
-      title: A catalog section
+      title: Section
       type: object
       required: [key, title]
       properties:
         key: { $ref: "#/$defs/key" }
+        comment: { type: string }
         title: { $ref: "#/$defs/text" }
-        questions:
+        questionsets:
           type: array
           items:
-            oneOf:
-              - title: Question set
-                description: A set of questions that are displayed together on one page.
-                type: object
-                required: [key, title]
-                additionalProperties: false
-                properties:
-                  key: { $ref: "#/$defs/key" }
-                  title: { $ref: "#/$defs/text" }
-                  questions:
-                    type: array
-                    items: { $ref: "#/$defs/question" }
-              - { $ref: "#/$defs/question" }
+            title: Question set
+            description: A set of questions that are displayed together on one page.
+            type: object
+            required: [key, title]
+            additionalProperties: false
+            properties:
+              key: { $ref: "#/$defs/key" }
+              comment: { type: string }
+              title: { $ref: "#/$defs/text" }
+              attribute: { $ref: "#/$defs/attribute" }
+              questions:
+                type: array
+                items: { $ref: "#/$defs/question" }
 $defs:
   prefix:
     title: URL prefix
@@ -55,6 +57,10 @@ $defs:
     description: The key is kind of a human-readable id of an element in it's collection'. It should only contain non-capital letters and underscores, but should not start or end with underscore.
     type: string
     pattern: "^[a-z]+([_][a-z]+)*$"
+  attribute:
+    title: Attribute reference
+    type: string
+    format: uri-reference
   condition:
     title: Condition
     type: string
@@ -92,6 +98,7 @@ $defs:
       required: [key]
       properties:
         key: { $ref: "#/$defs/key" }
+        comment: { type: string }
         children: { $ref: "#/$defs/domainList" }
   options:
     type: array
@@ -101,6 +108,7 @@ $defs:
       additionalProperties: false
       properties:
         key: { $ref: "#/$defs/key" }
+        comment: { type: string }
         text: { $ref: "#/$defs/text" }
         additionalInput:
           type: boolean
@@ -112,6 +120,8 @@ $defs:
         additionalProperties: false
         properties:
           key: { $ref: "#/$defs/key" }
+          comment: { type: string }
+          attribute: { $ref: "#/$defs/attribute" }
           condition: { $ref: "#/$defs/condition" }
           text: { $ref: "#/$defs/text" }
           type:
@@ -122,6 +132,8 @@ $defs:
         additionalProperties: false
         properties:
           key: { $ref: "#/$defs/key" }
+          comment: { type: string }
+          attribute: { $ref: "#/$defs/attribute" }
           condition: { $ref: "#/$defs/condition" }
           text: { $ref: "#/$defs/text" }
           type:

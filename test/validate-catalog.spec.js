@@ -43,3 +43,21 @@ test('Translated text only validates if both translations are present', t => {
   }
   t.true(validate(data))
 })
+
+test('valid attribute', t => {
+  const data = catalog()
+  data.sections = [
+    {
+      key: 'section_key',
+      title: 'Section title',
+      questionsets: [
+        {
+          key: 'questionset_key',
+          title: 'Questionset title',
+          attribute: 'data_setup'
+        }
+      ]
+    }
+  ]
+  t.true(validate(data), JSON.stringify(validate.errors))
+})
