@@ -15,6 +15,8 @@
     "build": "npm run convert && npm run compile",
     "pretest": "npm run build",
     "test": "ava",
+    "preinstrument": "ajv compile --spec draft2019 -s schema/catalog.yml -c ajv-formats --validate-formats --code-lines -o dist/validate-catalog.js",
+    "instrument": "c8 -n dist/validate-catalog.js --reporter html ava",
     "prepare": "npm run build",
     "prepack": "npm run build",
     "preversion": "npm test",
@@ -41,13 +43,14 @@
     "dist"
   ],
   "dependencies": {
-    "ajv": "^7.0.1",
+    "ajv": "^7.0.2",
     "ajv-formats": "^1.5.1"
   },
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
     "ajv-cli": "^4.0.1",
     "ava": "^3.14.0",
+    "c8": "^7.3.5",
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
     "markdownlint-cli2": "^0.0.13",
