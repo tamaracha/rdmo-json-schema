@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.0] - 2020-12-21
+## [0.2.0] - 2020-12-22
 ### Added
 - Attribute property in questionset and question schema
 - comment property
