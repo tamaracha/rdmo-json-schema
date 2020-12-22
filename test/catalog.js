@@ -1,8 +1,8 @@
 'use strict'
 const test = require('ava')
-const validate = require('../index.js').validate
+const validate = require('../dist/validate-catalog')
 
-function catalog () {
+function createCatalog () {
   return {
     prefix: 'https://rdmo.example.com',
     key: 'catalog_134_key',
@@ -10,43 +10,37 @@ function catalog () {
   }
 }
 
-test('valid minimal catalog', t => {
-  const data = catalog()
-  t.true(validate(data))
+test.beforeEach(t => {
+  t.context.data = createCatalog()
 })
 
-test('invalid minimal catalog with wrong key', t => {
-  const data = catalog()
-  data.key = 'No_Capitals'
-  t.false(validate(data))
+test('valid minimal catalog', t => {
+  t.true(validate(t.context.data))
 })
 
 test('invalid minimal catalog with non-uri prefix', t => {
-  const data = catalog()
-  data.prefix = 'x.y.z'
-  t.false(validate(data))
+  t.context.data.prefix = 'x.y.z'
+  t.false(validate(t.context.data))
 })
 
 test('Translated text only validates if both translations are present', t => {
-  const data = catalog()
-  data.title = {
+  t.context.data.title = {
     en: 'English title'
   }
-  t.false(validate(data))
-  data.title = {
+  t.false(validate(t.context.data))
+  t.context.data.title = {
     de: 'Deutscher Titel'
   }
-  t.false(validate(data))
-  data.title = {
+  t.false(validate(t.context.data))
+  t.context.data.title = {
     de: 'Deutscher Titel',
     en: 'English title'
   }
-  t.true(validate(data))
+  t.true(validate(t.context.data))
 })
 
 test('valid attribute', t => {
-  const data = catalog()
-  data.sections = [
+  t.context.data.sections = [
     {
       key: 'section_key',
       title: 'Section title',
@@ -59,5 +53,5 @@ test('valid attribute', t => {
       ]
     }
   ]
-  t.true(validate(data), JSON.stringify(validate.errors))
+  t.true(validate(t.context.data), JSON.stringify(validate.errors))
 })
