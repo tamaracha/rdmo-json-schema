@@ -1,6 +1,6 @@
 {
   "name": "rdmo-json-schema",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A JSON schema for maintaining RDMO contents",
   "main": "index.js",
   "scripts": {
