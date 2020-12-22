@@ -5,7 +5,7 @@ const validate = require('../index.js').validate
 function catalog () {
   return {
     prefix: 'https://rdmo.example.com',
-    key: 'catalog_key',
+    key: 'catalog_134_key',
     title: 'Catalog title'
   }
 }

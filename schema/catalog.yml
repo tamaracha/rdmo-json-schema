@@ -54,9 +54,9 @@ $defs:
     format: uri
   key:
     title: Element key
-    description: The key is kind of a human-readable id of an element in it's collection'. It should only contain non-capital letters and underscores, but should not start or end with underscore.
+    description: The key is kind of a human-readable id of an element in it's collection'. It should only contain non-capital letters, numbers, and underscores, but should not start or end with underscore.
     type: string
-    pattern: "^[a-z]+([_][a-z]+)*$"
+    pattern: "^[a-z0-9]+([_][a-z0-9]+)*$"
   attribute:
     title: Attribute reference
     type: string
