@@ -7,7 +7,7 @@
     "lint": "standard --fix -- | snazzy",
     "clean": "shx rm -rf dist",
     "preconvert": "shx mkdir -p dist",
-    "convert": "js-yaml schema/catalog.yml > dist/catalog.schema.json",
+    "convert": "node script/bundle-schema.js",
     "precompile": "shx mkdir -p dist",
     "compile": "ajv compile --spec draft2019 -s schema/catalog.yml -c ajv-formats --validate-formats --all-errors -o dist/validate-catalog.js",
     "validate": "ajv compile --spec draft2019 -c ajv-formats -s",
